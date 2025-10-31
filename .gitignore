@@ -1,0 +1,12 @@
+*_withnotes.*
+*.aux
+*.log
+*.nav
+*.out
+*.pdf
+*.snm
+*.toc
+*.vrb
+Examples/
+intro_text.txt
+notes.txt
