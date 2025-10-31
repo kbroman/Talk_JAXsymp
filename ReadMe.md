@@ -3,6 +3,9 @@
 Short talk on reproducible research for a Jackson Lab symposium 6 Nov
 2025 in Portland, Maine.
 
+- Slides: <https://kbroman.org/Talk_JAXsymp/jax_symp.pdf>
+- Slides with notes:  <https://kbroman.org/Talk_JAXsymp/jax_symp_withnotes.pdf>
+
 ---
 
 To the extent possible under law,
