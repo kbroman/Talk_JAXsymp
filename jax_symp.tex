@@ -1,0 +1,392 @@
+\documentclass[aspectratio=169,12pt,t]{beamer}
+\usepackage{graphicx}
+\setbeameroption{hide notes}
+\setbeamertemplate{note page}[plain]
+\usepackage{listings}
+
+\input{header.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% end of header
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% title info
+\title{Reproducible research}
+\author{\href{https://kbroman.org}{Karl Broman}}
+\institute{Biostatistics \& Medical Informatics, UW{\textendash}Madison}
+\date{\href{https://kbroman.org}{\tt \scriptsize \color{foreground} kbroman.org}
+\\[-4pt]
+\href{https://github.com/kbroman}{\tt \scriptsize \color{foreground} github.com/kbroman}
+\\[-4pt]
+\href{https://rstats.me/@kbroman}{\tt \scriptsize \color{foreground} @kbroman@rstats.me}
+\\[2pt]
+\scriptsize {\lolit Slides:} \href{https://kbroman.org/JAXsymp}{\tt
+  \color{foreground} kbroman.org/JAXsymp}
+}
+
+
+\begin{document}
+
+% title slide
+{
+\setbeamertemplate{footline}{} % no page number here
+\frame{
+  \titlepage
+
+  \note{This is a much-shortened version of lecture of my usual
+    lecture on ``steps to reproducible research'' (see
+    {\tt https://github.com/kbroman/Talk\_ReproRes}).
+
+    This is for a Jackson Lab symposium on 6 Nov 2025, part of the
+    preparations to develop a course on omics analysis.
+
+    Source: {\tt https://github.com/kbroman/Talk\_JAXsymp} \\
+    These slides: {\tt https://kbroman.org/Talk\_JAXsymp} \\
+    Slides with notes: {\tt https://kbroman.org/Talk\_JAXsymp/jax\_symp\_withnotes.pdf}
+
+    By ``reproducible research,'' I'm referring to ``computational
+    reproducibility,'' by which I mean that the data and code for a
+    project are packaged together in a way that they can be handed to
+    someone else, who can rerun the code and get the same
+    results---the same figures and tables. This is surprisingly hard
+    to do, and it's even more difficult in the context of a
+    collaboration between two or more data analysts.
+}
+} }
+
+
+\begin{frame}[fragile,c]{}
+
+\begin{center}
+\begin{minipage}[c]{9.3cm}
+\begin{semiverbatim}
+\lstset{basicstyle=\normalsize}
+\begin{lstlisting}[linewidth=9.3cm]
+ Karl -- this is very interesting,
+ however you used an old version of
+ the data (n=143 rather than n=226).
+
+ I'm really sorry you did all that
+ work on the incomplete dataset.
+
+ Bruce
+\end{lstlisting}
+\end{semiverbatim}
+\end{minipage}
+\end{center}
+
+\note{I'm an applied statistician; my goal is to help people make
+  sense of their data. I have a lot of collaborators, and there's
+  nothing I enjoy more than puzzling over their data. So I write a lot of
+  reports, describing what I've done and what I've learned.
+
+  This is an email I got from a collaborator,
+  in response to an analysis report that I had sent him.
+  It's always a bit of a shock to get an email like this: what have I
+  done? Why am I working with the wrong data, and where is the right data?
+
+  But what he didn't know is that by this point in my life, I'd
+  adopted a reproducible workflow.
+  Because I'd set things up carefully, I could just substitute in the
+  newer dataset, type a single command (``{\tt make}'') to rerun the
+  analyses, and get the revised report.
+
+  This is a reproducibility success story. We all make mistakes, but
+  if our projects are reproducible, we can nimbly recover from those
+  mistakes.
+
+  There is a second important lesson here: At the start of such
+  reports, I always include a paragraph about our shared goals, along
+  with some brief data summaries. By doing so, he immediately saw that
+  I had an old version of the data. If I hadn't done so, we might
+  never have discovered my error.
+}
+\end{frame}
+
+
+\begin{frame}[c]{}
+\centering
+{\Large The results in Table 1 don't seem to \\[12pt]
+correspond to those in Figure 2.}
+
+\note{My computational life is not entirely rosy. This is the sort of
+  email that will freak me out.}
+\end{frame}
+
+
+\begin{frame}[c]{}
+\centerline{\Large Where did we get this data file?}
+
+\note{Record the provenance of all data or metadata files.}
+\end{frame}
+
+
+
+\begin{frame}[c]{}
+\centerline{\Large Why did I omit those samples?}
+
+\note{I may decide to omit a few samples. Will I record {\nhilit why}
+  I omitted those particular samples?}
+\end{frame}
+
+
+
+\begin{frame}[c]{}
+\centerline{\Large Which image goes with which experiment?}
+
+\note{For experimental biologists, it can be tricky to keep track of
+  the vast set of images and experiments they perform.}
+\end{frame}
+
+
+
+\begin{frame}[c]{}
+\centerline{\Large How did I make that figure?}
+
+\note{Sometimes, in the midst of a bout of exploratory data analysis,
+  I'll create some exciting graph and have a heck of a time
+  reproducing it afterwards.}
+\end{frame}
+
+
+\begin{frame}[c]{}
+\centerline{\Large In what order do I run these scripts?}
+
+\note{Sometimes the process of data file manipulation and data
+  cleaning gets spread across a bunch of scripts that need to be
+  executed in a particular order. Will I record this information? Is
+  it obvious what script does what?}
+\end{frame}
+
+
+
+\begin{frame}[c]{}
+\centerline{\Large ``Your script is now giving an error."}
+
+\note{It was working last week. Well, last month, at least.
+
+How easy is it to go back through that script's history to see when
+and why it stopped working?}
+\end{frame}
+
+
+
+\begin{frame}[c]{}
+\centerline{\Large ``The attached is similar to the code we used."}
+
+\note{From an email in response to my request for code used for a
+  paper.}
+\end{frame}
+
+
+
+\begin{frame}[c]{Reproducible research}
+
+\begin{quotation}
+{\normalfont
+  organize the data and code in a way \\[4pt]
+  that you can hand them to someone else \\[4pt]
+  and they can re-run the code \\[4pt]
+  and get the same results \\[4pt]
+  \quad (the same figures and tables)
+}
+\end{quotation}
+
+\note{
+  To reiterate my definition of reproducible research:
+  it's about assembly and organizing the data and code
+  so that they can be re-run to give the same results.
+}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}{Steps to reproducible research}
+
+\bigskip
+
+  \bi
+\item Organize your data and code
+\item Everything with a script
+\item Automate the process
+\item Turn scripts into reproducible reports
+\item Turn repeated code into functions
+\item Package functions for reuse
+\item Use version control
+\item License your software
+  \ei
+
+
+\bigskip \bigskip
+\bigskip
+
+
+\hfill {\tt \footnotesize \lolit \href{https://kbroman.org/steps2rr}{kbroman.org/steps2rr}}
+
+\note{
+  More than 10 years ago, while preparing for a workshop to develop a
+  course on reproducible research, I thought through the steps one
+  might follow, when transitioning from ``standard practice'' to a
+  fully reproducible workflow. I created the website
+  \href{https://kbroman.org/steps2rr}{\tt kbroman.org/steps2rr}.
+}
+\end{frame}
+
+
+
+
+\begin{frame}{Additional considerations}
+
+\bigskip
+
+  \bi
+  \item Arranging data within files
+  \item Metadata
+  \item Sharing data and code
+  \item Software testing
+  \item Capturing the software environment
+  \item Containers
+  \item Handling large-scale computations
+  \item Coordinating with collaborators
+  \ei
+
+
+\note{
+  There are a number of additional important things that I hadn't
+  covered in \href{https://kbroman.org/steps2rr}{\tt kbroman.org/steps2rr}.
+}
+\end{frame}
+
+
+
+\begin{frame}{Challenges in collaborations}
+
+\bigskip
+
+ \bi
+\item Shared vision
+\item Compromise
+\item Coordination
+\item Communication
+\item Sharing code and data
+\item Synchronization
+  \ei
+
+  \note{
+    Collaboration also has challenges.
+
+    Do you have a shared vision for the reproducibility of the
+    project? You'll no doubt need to make some compromises about how
+    things are done: you can't both just do things the way you've
+    always done them. Careful coordination and regular communication
+    are key.
+
+    And then there are the technical challenges of how to share the
+    code and data and make sure your two working projects remain in
+    sync.
+
+    In a sense, the reproducibility of a collaborative project is
+    dependent on the weakest link. If one collaborator refuses to
+    fully participate and share their work, the chain is broken.
+}
+
+\end{frame}
+
+
+
+\begin{frame}{Tools}
+
+\bigskip
+
+  \bi
+\item R, python
+\item R Markdown, Quarto, Jupyter notebooks
+\item GNU make, snakemake, targets
+\item functions and packages
+\item git and GitHub
+\item renv, conda
+\item docker
+  \ei
+
+\note{
+  There are quite a lot of new tools to learn, when seeking to adopt a
+  reproducible life.
+}
+
+\end{frame}
+
+
+
+
+\begin{frame}{}
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+\begin{center}
+\large
+The most important tool is the {\hilit mindset},\\
+when starting, that the end product \\
+will be reproducible.
+\end{center}
+
+\hfill
+{\lolit
+{\textendash} Keith Baggerly
+}
+
+\bigskip \bigskip \bigskip
+
+\onslide<2>{
+\begin{center}
+\large
+The second-most important tool is {\hilit training}.
+\end{center}
+}
+
+\note{So true. Desire for reproducibility is step one.
+
+And I've long felt that the key need, in getting computational
+scientists to adopt a reproducible workflow, is training. For the
+most part, all of the software tools are available, but many people
+haven't incorporated them into their daily work.
+}
+\end{frame}
+
+
+
+
+\begin{frame}[c]{}
+
+\Large
+
+Slides: \href{https://kbroman.org/JAXsymp}{\tt kbroman.org/JAXsymp} \quad
+\includegraphics[height=5mm]{Figs/cc-zero.png}
+
+\vspace{10mm}
+
+\href{https://kbroman.org}{\tt kbroman.org}
+
+\vspace{10mm}
+
+\href{https://github.com/kbroman}{\tt github.com/kbroman}
+
+\vspace{10mm}
+
+\href{https://rstats.me/@kbroman}{\tt @kbroman@rstats.me}
+
+
+\note{
+  Here's where you can find me, as well as the slides for this talk.
+}
+\end{frame}
+
+
+
+
+\end{document}
